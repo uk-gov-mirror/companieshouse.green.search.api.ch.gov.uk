@@ -21,6 +21,7 @@
 		<environment-reader-library.version>3.0.5</environment-reader-library.version>
 		<api-sdk-java.version>7.0.5</api-sdk-java.version>
 		<opensearch-java-client.version>3.9.0</opensearch-java-client.version>
+		<aws-sdk-java.version>2.41.19</aws-sdk-java.version>
 		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 		<start-class>uk.gov.companieshouse.search.api.SearchApiApplication</start-class>
 
@@ -31,7 +32,10 @@
 		<sonar.coverage.jacoco.xmlReportPaths>
 			${project.basedir}/target/site/jacoco/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
-		<sonar.coverage.exclusions>**/model/**</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>
+			**/model/**,
+			**/config/**
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencyManagement>
@@ -40,6 +44,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
 				<version>${spring-boot-dependencies.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>bom</artifactId>
+				<version>${aws-sdk-java.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -77,6 +88,18 @@
 			<artifactId>opensearch-java</artifactId>
 			<version>${opensearch-java-client.version}</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>auth</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>regions</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>apache-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
